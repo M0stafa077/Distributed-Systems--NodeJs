@@ -10,7 +10,7 @@ on:
 
 jobs:
     test:
-        name: Run Tests for web-api and recipe-api
+        name: Run Tests for recipe-api and web-api
         runs-on: ubuntu-latest
 
         steps:
@@ -29,21 +29,21 @@ jobs:
               uses: actions/cache@v3
               with:
                   path: |
-                      **/node_modules
-                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}
+                      00.distributed-node/**/node_modules
+                  key: ${{ runner.os }}-node-${{ hashFiles('00.distributed-node/**/package-lock.json', '00.distributed-node/**/yarn.lock') }}
                   restore-keys: |
                       ${{ runner.os }}-node-
 
             # Install dependencies and run tests for recipe-api
             - name: Install and Test recipe-api
-              working-directory: ./recipe-api
+              working-directory: ./00.distributed-node/recipe-api
               run: |
                   npm ci
                   npm test
 
             # Install dependencies and run tests for web-api
             - name: Install and Test web-api
-              working-directory: ./web-api
+              working-directory: ./00.distributed-node/web-api
               run: |
                   npm ci
                   npm test
