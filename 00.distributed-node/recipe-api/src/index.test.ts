@@ -1,6 +1,16 @@
 import request from 'supertest';
 import { app } from './index';
 
+beforeAll(async () => {
+  // Ensure the app is fully ready before running tests
+  await app.ready();
+});
+
+afterAll(async () => {
+  // Close the app after all tests
+  await app.close();
+});
+
 describe('Recipe API', () => {
   it('should return hello world', async () => {
     const response = await request(app.server).get('/');
@@ -39,11 +49,11 @@ describe('Recipe API', () => {
       { id: 2, name: 'Sauce', quantity: '2 cups' },
     ]);
   });
-});
 
-it('should return 404 for unknown recipe', async () => {
-  const response = await request(app.server).get('/recipes/999');
-  expect(response.status).toBe(404);
-  const body = response.body;
-  expect(body.error).toBe('Not Found');
+  it('should return 404 for unknown recipe (duplicate test)', async () => {
+    const response = await request(app.server).get('/recipes/999');
+    expect(response.status).toBe(404);
+    const body = response.body;
+    expect(body.error).toBe('Not Found');
+  });
 });
