@@ -1,37 +1,41 @@
-import express, { Request, Response } from "express";
+import fastify from 'fastify';
 
-const app = express();
+const app = fastify({ logger: true });
 const port = 5000;
 
-app.get("/", (req: Request, res: Response) => {
-    res.send("hello world");
+app.get('/', async (request, reply) => {
+  reply.send('hello world');
 });
 
-app.get("/recipes/:id", (req: Request, res: Response) => {
-    console.log(`worker request pid: ${process.pid}`);
+app.get('/recipes/:id', async (request, reply) => {
+  console.log(`worker request pid: ${process.pid}`);
 
-    const { id } = req.params;
+  const { id } = request.params as { id: string };
 
-    if (+id !== 42) {
-        res.status(404).json({ error: "Not Found" });
-        return;
-    }
-    res.json({
-        producer_pid: process.pid,
-        recipe: {
-            id: Number(id),
-            name: "Chicken Tikka Masala",
-            steps: "Throw it in a pot...",
-            ingredients: [
-                { id: 1, name: "Chicken", quantity: "1 lb" },
-                { id: 2, name: "Sauce", quantity: "2 cups" },
-            ],
-        },
-    });
+  if (+id !== 42) {
+    reply.status(404).send({ error: 'Not Found' });
+    return;
+  }
+  reply.send({
+    producer_pid: process.pid,
+    recipe: {
+      id: Number(id),
+      name: 'Chicken Tikka Masala',
+      steps: 'Throw it in a pot...',
+      ingredients: [
+        { id: 1, name: 'Chicken', quantity: '1 lb' },
+        { id: 2, name: 'Sauce', quantity: '2 cups' },
+      ],
+    },
+  });
 });
 
-app.listen(port, () => {
-    console.log(`server listening on http://localhost:${port}`);
+app.listen({ port, host: '0.0.0.0' }, (err, address) => {
+  if (err) {
+    app.log.error(err);
+    process.exit(1);
+  }
+  app.log.info(`server listening on ${address}`);
 });
 
 export { app };
