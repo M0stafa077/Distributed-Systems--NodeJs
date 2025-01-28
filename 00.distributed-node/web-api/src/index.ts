@@ -1,17 +1,26 @@
 import fastify from "fastify";
-import fetch from "node-fetch";
+import HttpRetry from "./HttpRetry";
 
 const app = fastify({ logger: true });
 
 app.get("/", async (req, reply) => {
     try {
-        const res = await fetch("http://recipe-api:5000/recipes/42");
-        const producer_data = await res.json();
-        return {
-            consumer_pid: process.pid,
-            producer_data,
-            status: "success",
-        };
+        const res = await HttpRetry.fetch("http://recipe-api:5000/recipes/42");
+
+        if (res.status === "DONE") {
+            return {
+                consumer_pid: process.pid,
+                producer_data: res.response,
+                status: "success",
+            };
+        } else {
+            reply.status(res.code);
+            return {
+                consumer_pid: process.pid,
+                error: "Failed to fetch data from producer",
+                status: "failed",
+            };
+        }
     } catch (err: any) {
         reply.status(500);
         return {
