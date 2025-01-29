@@ -1,7 +1,7 @@
-import fastify from "fastify";
+import fastify, { FastifyInstance } from "fastify";
 import HttpRetry from "./HttpRetry";
 
-const app = fastify({ logger: true });
+const app: FastifyInstance = fastify({ logger: true });
 
 app.get("/", async (req, reply) => {
     try {
@@ -14,6 +14,7 @@ app.get("/", async (req, reply) => {
                 status: "success",
             };
         } else {
+            // console.info({ res });
             reply.status(res.code);
             return {
                 consumer_pid: process.pid,
