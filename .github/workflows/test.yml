@@ -2,9 +2,13 @@ name: Run Tests
 
 on:
     push:
+        paths:
+            - "00.distributed-node/**"
         branches:
             - main
     pull_request:
+        paths:
+            - "00.distributed-node/**"
         branches:
             - main
 
