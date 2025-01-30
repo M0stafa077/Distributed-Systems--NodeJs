@@ -1,0 +1,16 @@
+{
+    "name": "03.marshalling-pattern",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "fastify": "^5.2.1"
+    }
+}
