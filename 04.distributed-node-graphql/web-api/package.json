@@ -1,0 +1,24 @@
+{
+    "name": "web-api",
+    "version": "1.0.0",
+    "main": "dist/index.js",
+    "type": "module",
+    "scripts": {
+        "dev": "tsc --watch & nodemon dist/index.js",
+        "start": "tsc && node dist/index.js",
+        "clean": "rm -rf dist"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "@types/node-fetch": "^2.6.12",
+        "fastify": "3.2",
+        "node-fetch": "2.6"
+    },
+    "devDependencies": {
+        "@types/node": "^22.10.10",
+        "nodemon": "^3.1.9"
+    }
+}

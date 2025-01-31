@@ -1,0 +1,24 @@
+{
+  "name": "recipe-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsc --watch & nodemon dist/index.js",
+    "start": "tsc && node dist/index.js",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.10",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.4.2"
+  },
+  "dependencies": {
+    "fastify": "3.2",
+    "fastify-gql": "5.3"
+  }
+}
