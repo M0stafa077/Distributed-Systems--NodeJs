@@ -1,9 +1,23 @@
 services:
-    web-api:
-        container_name: Consumer
+    web-api-1:
+        container_name: Consumer-1
         build: ./web-api
         ports:
             - "3001:3001"
+        depends_on:
+            - recipe-api
+        environment:
+            - PORT=3001
+        volumes:
+            - ./web-api:/web-api
+
+    web-api-2:
+        container_name: Consumer-2
+        build: ./web-api
+        ports:
+            - "3002:3002"
+        environment:
+            - PORT=3002
         depends_on:
             - recipe-api
         volumes:
@@ -16,3 +30,15 @@ services:
             - "5000:5000"
         volumes:
             - ./recipe-api:/recipe-api
+    haproxy:
+        container_name: HAProxy
+        image: haproxy:2.8
+        ports:
+            - "8080:80"
+            - "8000:8000"
+        depends_on:
+            - web-api-1
+            - web-api-2
+            - recipe-api
+        volumes:
+            - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
