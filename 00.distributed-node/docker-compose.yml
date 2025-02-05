@@ -54,6 +54,8 @@ services:
             - "7777:7777/udp"
         volumes:
             - ./logstash/pipeline:/etc/logstash/conf.d
+            - ./logstash/nodejs-template.json:/usr/share/logstash/config/nodejs-template.json
         environment:
             - ES_HEAP_SIZE=512m
             - LS_HEAP_SIZE=256m
+            - ES_JAVA_OPTS=-Xms512m -Xmx512m
