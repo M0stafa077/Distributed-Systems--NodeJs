@@ -1,7 +1,7 @@
 import fastify from 'fastify';
 
 const app = fastify({ logger: true });
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 app.get('/', async (request, reply) => {
   reply.send('hello world');
@@ -30,7 +30,7 @@ app.get('/recipes/:id', async (request, reply) => {
   });
 });
 
-app.listen({ port, host: '0.0.0.0' }, (err, address) => {
+app.listen({ port: +port, host: '0.0.0.0' }, (err, address) => {
   if (err) {
     app.log.error(err);
     process.exit(1);
