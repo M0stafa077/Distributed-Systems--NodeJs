@@ -8,7 +8,7 @@ app.get('/', async (request, reply) => {
 });
 
 app.get('/recipes/:id', async (request, reply) => {
-  console.log(`worker request pid: ${process.pid}`);
+  console.log(`Worker request pid: ${process.pid}`);
 
   const { id } = request.params as { id: string };
 
