@@ -1,0 +1,22 @@
+services:
+    web-api:
+        container_name: Consumer
+        build: ./web-api
+        ports:
+            - "3001:3001"
+        depends_on:
+            - recipe-api
+        environment:
+            - PORT=3001
+        volumes:
+            - ./web-api:/web-api
+            - ./shared:/shared
+
+    recipe-api:
+        container_name: Producer
+        build: ./recipe-api
+        ports:
+            - "5000:5000"
+        volumes:
+            - ./recipe-api:/recipe-api
+            - ./shared:/shared
