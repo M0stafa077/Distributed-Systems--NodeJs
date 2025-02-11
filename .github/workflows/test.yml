@@ -1,0 +1,58 @@
+name: Test recipe-api and web-api services
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '00.distributed-node/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '00.distributed-node/**'
+
+jobs:
+  test-recipe-api:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          cd 00.distributed-node/recipe-api
+          npm install
+
+      - name: Run tests
+        run: |
+          cd 00.distributed-node/recipe-api
+          npm test
+
+  test-web-api:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          cd 00.distributed-node/web-api
+          npm install
+
+      - name: Run tests
+        run: |
+          cd 00.distributed-node/web-api
+          npm test
